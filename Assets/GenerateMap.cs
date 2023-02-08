@@ -8,14 +8,13 @@ public class GenerateMap : MonoBehaviour
 {
     [SerializeField] private GameObject tile;
 
-    private int mapSize = 50;
+    private int mapSize = 100;
 
     private int seed = 55;
-    private float noiseFrequency = 20;
-    private float noiseAmplitude = 2f;
+    private float noiseFrequency = 40;
+    private float noiseAmplitude = 2.1f;
 
     public GameObject[,] tiles;
-
 
     // Start is called before the first frame update
     void Start()
@@ -56,9 +55,9 @@ public class GenerateMap : MonoBehaviour
                 Vector3 ne = nw + Vector3.right;
                 Vector3 sw = nw - Vector3.forward;
                 Vector3 se = sw + Vector3.right;
+
                 //Make the squad
                 t.GetComponent<CreateTile>().MakeQuad(nw, ne, se, sw, noise);
-
             }
         }
     }

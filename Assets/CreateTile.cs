@@ -14,14 +14,9 @@ public class CreateTile : MonoBehaviour
 
     [SerializeField] private TileType tileType;
 
-    [SerializeField] private Color grassColor1;
-    [SerializeField] private Color grassColor2;
-
-    [SerializeField] private Color sandColor1;
-    [SerializeField] private Color sandColor2;
-
-    [SerializeField] private Color waterColor1;
-    [SerializeField] private Color waterColor2;
+    [SerializeField] private Material grassMaterial;
+    [SerializeField] private Material sandMaterial;
+    [SerializeField] private Material waterMaterial;
 
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private MeshFilter meshFilter;
@@ -36,15 +31,15 @@ public class CreateTile : MonoBehaviour
         tris = new int[6];
 
         //Rounding noise
-        noise = (float)Math.Round(noise, 1);
+        //noise = (float)Math.Round(noise, 1);
         print(noise);
 
         //Setting tiletype
-        if (noise < 0.35)
+        if (noise < 0.32)
         {
             tileType = TileType.Water;
         }
-        else if(noise > 0.45)
+        else if(noise > 0.365)
         {
             tileType = TileType.Grass;
         }
@@ -67,22 +62,20 @@ public class CreateTile : MonoBehaviour
         tris[4] = 2;
         tris[5] = 3;
 
-        
         //Applying color
         if (tileType == TileType.Grass)
         {
-            meshRenderer.material.color = Color.Lerp(grassColor1, grassColor2, noise);
+            meshRenderer.material = grassMaterial;
         }
         else if (tileType == TileType.Sand)
         {
-            meshRenderer.material.color = Color.Lerp(sandColor1, sandColor2, noise);
+            meshRenderer.material = sandMaterial;
         }
         else
         {
-            meshRenderer.material.color = Color.Lerp(waterColor1, waterColor2, noise);
+            meshRenderer.material = waterMaterial;
         }
         
-
         //Create the mesh
         mesh.vertices = verts;
         mesh.triangles = tris;
