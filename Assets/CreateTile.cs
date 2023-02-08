@@ -30,10 +30,6 @@ public class CreateTile : MonoBehaviour
         verts = new Vector3[4];
         tris = new int[6];
 
-        //Rounding noise
-        //noise = (float)Math.Round(noise, 1);
-        print(noise);
-
         //Setting tiletype
         if (noise < 0.32)
         {
@@ -47,6 +43,8 @@ public class CreateTile : MonoBehaviour
         {
             tileType = TileType.Sand;
         }
+
+        //Set water tiles lower
 
         //Placing vertices
         verts[0] = nw;

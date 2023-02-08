@@ -8,7 +8,7 @@ public class GenerateMap : MonoBehaviour
 {
     [SerializeField] private GameObject tile;
 
-    private int mapSize = 100;
+    private int mapSize;
 
     private int seed = 55;
     private float noiseFrequency = 40;
@@ -19,9 +19,11 @@ public class GenerateMap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Get data from singleton
+        mapSize = WorldGenerationData.Instance.mapSize;
+
         //A list to store all the tiles in
         tiles = new GameObject[mapSize, mapSize];
-
 
         GenerateWorld();
 
