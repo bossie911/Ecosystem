@@ -77,99 +77,51 @@ public class GenerateMap : MonoBehaviour
             {
                 if (tiles[x,z].GetComponent<Tile>().tileType == Tile.TileType.Water)
                 {
+                    //Check if next tile is land
                     //Checking for south tile
                     if (z > 0)
                     {
-                        //Check if tile south is land
-                        Tile waterTile = tiles[x, z].GetComponent<Tile>();
-                        Tile landTile = tiles[x, z - 1].GetComponent<Tile>();
-
-                        if (landTile.tileType == Tile.TileType.Sand || landTile.tileType == Tile.TileType.Grass)
-                        {
-                            //Make a quad for gap of water
-                            GameObject t = Instantiate(fill, transform);
-
-                            //Positions for the vertices for each tile
-                            Vector3 nw = landTile.verts[1];
-                            Vector3 ne = landTile.verts[0];
-                            Vector3 sw = waterTile.verts[2];
-                            Vector3 se = waterTile.verts[3];
-
-                            //Make the quad
-                            t.GetComponent<FillGap>().MakeQuad(nw, ne, se, sw, landTile.tileType);
-                        }
+                        CheckTile(x, z, 0, -1, 1, 0, 2, 3);
                     }
-
                     //Checking for north tile
                     if (z < mapSize - 1)
                     {
-                        //Check if tile north is land
-                        Tile waterTile = tiles[x, z].GetComponent<Tile>();
-                        Tile landTile = tiles[x, z + 1].GetComponent<Tile>();
-
-                        if (landTile.tileType == Tile.TileType.Sand || landTile.tileType == Tile.TileType.Grass)
-                        {
-                            //Make a quad gap of water
-                            GameObject t = Instantiate(fill, transform);
-
-                            //Positions for the vertices for each tile
-                            Vector3 nw = landTile.verts[3];
-                            Vector3 ne = landTile.verts[2];
-                            Vector3 sw = waterTile.verts[0];
-                            Vector3 se = waterTile.verts[1];
-
-                            //Make the quad
-                            t.GetComponent<FillGap>().MakeQuad(nw, ne, se, sw, landTile.tileType);
-                        }
+                        CheckTile(x, z, 0, 1, 3, 2, 0, 1);
                     }
-
                     //Checking for east tile
                     if (x < mapSize - 1)
                     {
-                        //Check if tile east is land
-                        Tile waterTile = tiles[x, z].GetComponent<Tile>();
-                        Tile landTile = tiles[x + 1, z].GetComponent<Tile>();
-
-                        if (landTile.tileType == Tile.TileType.Sand || landTile.tileType == Tile.TileType.Grass)
-                        {
-                            //Make a quad  gap of water
-                            GameObject t = Instantiate(fill, transform);
-
-                            //Positions for the vertices for each tile
-                            Vector3 nw = landTile.verts[0];
-                            Vector3 ne = landTile.verts[3];
-                            Vector3 sw = waterTile.verts[1];
-                            Vector3 se = waterTile.verts[2];
-
-                            //Make the quad
-                            t.GetComponent<FillGap>().MakeQuad(nw, ne, se, sw, landTile.tileType);
-                        }
+                        CheckTile(x, z, 1, 0, 0, 3, 1, 2);
                     }
-
                     //Checking for west tile
                     if (x > 0)
                     {
-                        //Check if tile north is land
-                        Tile waterTile = tiles[x, z].GetComponent<Tile>();
-                        Tile landTile = tiles[x - 1, z].GetComponent<Tile>();
-
-                        if (landTile.tileType == Tile.TileType.Sand || landTile.tileType == Tile.TileType.Grass)
-                        {
-                            //Make a quad for the gap of water
-                            GameObject t = Instantiate(fill, transform);
-
-                            //Positions for the vertices for each tile
-                            Vector3 nw = landTile.verts[2];
-                            Vector3 ne = landTile.verts[1];
-                            Vector3 sw = waterTile.verts[3];
-                            Vector3 se = waterTile.verts[0];
-
-                            //Make the quad
-                            t.GetComponent<FillGap>().MakeQuad(nw, ne, se, sw, landTile.tileType);
-                        }
+                        CheckTile(x, z, -1, 0, 2, 1, 3, 0);
                     }
                 }
             }
+        }
+    }
+
+    private void CheckTile(int xCoord, int zCoord, int xCoordOffset, int zCoordOffset, int nw_i, int ne_i, int sw_i, int se_i)
+    {
+        //Check if next tile is land
+        Tile waterTile = tiles[xCoord, zCoord].GetComponent<Tile>();
+        Tile nextTile = tiles[xCoord + xCoordOffset, zCoord + zCoordOffset].GetComponent<Tile>();
+
+        if (nextTile.tileType == Tile.TileType.Sand || nextTile.tileType == Tile.TileType.Grass)
+        {
+            //Make a quad for the gap of water
+            GameObject t = Instantiate(fill, transform);
+
+            //Positions for the vertices for each tile
+            Vector3 nw = nextTile.verts[nw_i];
+            Vector3 ne = nextTile.verts[ne_i];
+            Vector3 sw = waterTile.verts[sw_i];
+            Vector3 se = waterTile.verts[se_i];
+
+            //Make the quad
+            t.GetComponent<FillGap>().MakeQuad(nw, ne, se, sw, nextTile.tileType);
         }
     }
 }
