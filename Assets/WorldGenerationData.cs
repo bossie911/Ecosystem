@@ -7,6 +7,12 @@ public class WorldGenerationData : MonoBehaviour
     //Variables for generation
     public int mapSize = 100;
 
+    public float waterTileOffset = 0.5f;
+
+    public Material grassMaterial;
+    public Material sandMaterial;
+    public Material waterMaterial;
+
 
 
 

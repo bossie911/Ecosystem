@@ -3,25 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreateTile : MonoBehaviour
+public class Tile : MonoBehaviour
 {
-    private enum TileType
+    public enum TileType
     {
         Grass,
         Sand,
         Water
     }
 
-    [SerializeField] private TileType tileType;
+    [SerializeField] public TileType tileType;
 
-    [SerializeField] private Material grassMaterial;
-    [SerializeField] private Material sandMaterial;
-    [SerializeField] private Material waterMaterial;
+
 
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private MeshFilter meshFilter;
 
-    Vector3[] verts;
+    [SerializeField] public Vector3[] verts;
     int[] tris;
 
     public void MakeQuad(Vector3 nw, Vector3 ne, Vector3 se, Vector3 sw, float noise)
@@ -45,6 +43,14 @@ public class CreateTile : MonoBehaviour
         }
 
         //Set water tiles lower
+        if(tileType == TileType.Water)
+        {
+            Vector3 offset = new Vector3(0, WorldGenerationData.Instance.waterTileOffset, 0);
+            nw -= offset;
+            ne -= offset;
+            se -= offset;
+            sw -= offset;
+        }
 
         //Placing vertices
         verts[0] = nw;
@@ -63,15 +69,15 @@ public class CreateTile : MonoBehaviour
         //Applying color
         if (tileType == TileType.Grass)
         {
-            meshRenderer.material = grassMaterial;
+            meshRenderer.material = WorldGenerationData.Instance.grassMaterial;
         }
         else if (tileType == TileType.Sand)
         {
-            meshRenderer.material = sandMaterial;
+            meshRenderer.material = WorldGenerationData.Instance.sandMaterial;
         }
         else
         {
-            meshRenderer.material = waterMaterial;
+            meshRenderer.material = WorldGenerationData.Instance.waterMaterial;
         }
         
         //Create the mesh

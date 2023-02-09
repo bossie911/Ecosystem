@@ -331,6 +331,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapSize: 100
+  waterTileOffset: 0.5
+  grassMaterial: {fileID: 2100000, guid: a7858a65e5ef6164fbc9d007a502ec10, type: 2}
+  sandMaterial: {fileID: 2100000, guid: d558b72cd6c01af4daec845f73943470, type: 2}
+  waterMaterial: {fileID: 2100000, guid: b68a6ae316daa9e4481b088862a8064e, type: 2}
 --- !u!4 &1720340730
 Transform:
   m_ObjectHideFlags: 0
@@ -391,3 +395,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 3594410859474098614, guid: e372dea178afd9c48ad8fe0a0278921b, type: 3}
+  fill: {fileID: 3599596468207295264, guid: 944cb0bf2cc5b654ca30d8683c5965b6, type: 3}
