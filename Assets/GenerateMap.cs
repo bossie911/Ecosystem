@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class GenerateMap : MonoBehaviour
 {
-    [SerializeField] private GameObject tile;
-    [SerializeField] private GameObject fill;
+    [SerializeField] private GameObject tilePrefab;
+    [SerializeField] private GameObject fillPrefab;
 
     private int mapSize;
 
@@ -48,7 +48,7 @@ public class GenerateMap : MonoBehaviour
         {
             for (int x = 0; x < mapSize; x++)
             {
-                GameObject t = Instantiate(tile, transform);
+                GameObject t = Instantiate(tilePrefab, transform);
                 //Adding tile to list
                 tiles[x, z] = t;
 
@@ -99,6 +99,12 @@ public class GenerateMap : MonoBehaviour
                         CheckTile(x, z, -1, 0, 2, 1, 3, 0);
                     }
                 }
+
+                //Adding edge quads
+                if (z == 0)
+                {
+                    AddEdgeQuad(x, z, 3, 2);
+                }
             }
         }
     }
@@ -112,7 +118,7 @@ public class GenerateMap : MonoBehaviour
         if (nextTile.tileType == Tile.TileType.Sand || nextTile.tileType == Tile.TileType.Grass)
         {
             //Make a quad for the gap of water
-            GameObject t = Instantiate(fill, transform);
+            GameObject t = Instantiate(fillPrefab, transform);
 
             //Positions for the vertices for each tile
             Vector3 nw = nextTile.verts[nw_i];
@@ -123,5 +129,21 @@ public class GenerateMap : MonoBehaviour
             //Make the quad
             t.GetComponent<FillGap>().MakeQuad(nw, ne, se, sw, nextTile.tileType);
         }
+    }
+
+    private void AddEdgeQuad(int xCoord, int zCoord, int vector_1, int vector_2)
+    {
+        Tile tile = tiles[xCoord, zCoord].GetComponent<Tile>();
+        //Make a quad for the edge of the map
+        GameObject t = Instantiate(fillPrefab, transform);
+
+        //Positions for the vertices for each tile
+        Vector3 v1 = tile.verts[vector_1];
+        Vector3 v2 = tile.verts[vector_2];
+        Vector3 v3 = tile.verts[vector_2] - Vector3.up;
+        Vector3 v4 = tile.verts[vector_1] - Vector3.up;
+
+        //Make the quad
+        t.GetComponent<FillGap>().MakeQuad(v1, v2, v3, v4, tile.tileType);
     }
 }

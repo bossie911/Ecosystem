@@ -35,9 +35,13 @@ public class FillGap : MonoBehaviour
         {
             meshRenderer.material = WorldGenerationData.Instance.sandMaterial;
         }
-        else
+        else if (type == Tile.TileType.Grass)
         {
             meshRenderer.material = WorldGenerationData.Instance.grassMaterial;
+        }
+        else
+        {
+            meshRenderer.material = WorldGenerationData.Instance.waterMaterial;
         }
 
         //Create the mesh
