@@ -100,10 +100,25 @@ public class GenerateMap : MonoBehaviour
                     }
                 }
 
-                //Adding edge quads
+                //Adding quads to the edge of the map 
                 if (z == 0)
                 {
                     AddEdgeQuad(x, z, 3, 2);
+                }
+                //Checking for north tile
+                if (z == mapSize - 1)
+                {
+                    AddEdgeQuad(x, z, 1, 0);
+                }
+                //Checking for east tile
+                if (x == mapSize - 1)
+                {
+                    AddEdgeQuad(x, z, 2, 1);
+                }
+                //Checking for west tile
+                if (x == 0)
+                {
+                    AddEdgeQuad(x, z, 0, 3);    
                 }
             }
         }
