@@ -143,6 +143,13 @@ public class GenerateMap : MonoBehaviour
         Vector3 v3 = tile.verts[vector_2] - Vector3.up;
         Vector3 v4 = tile.verts[vector_1] - Vector3.up;
 
+        //Make quad smaller for water tiles
+        if (tile.tileType == Tile.TileType.Water)
+        {
+            v3 = tile.verts[vector_2] - Vector3.up / 2;
+            v4 = tile.verts[vector_1] - Vector3.up / 2;
+        }
+
         //Make the quad
         t.GetComponent<FillGap>().MakeQuad(v1, v2, v3, v4, tile.tileType);
     }
