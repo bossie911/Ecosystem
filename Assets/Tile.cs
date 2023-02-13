@@ -14,11 +14,11 @@ public class Tile : MonoBehaviour
 
     [SerializeField] public TileType tileType;
 
+    public bool hasBerry = false;
 
-
+    //Mesh references
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private MeshFilter meshFilter;
-
     [SerializeField] public Vector3[] verts;
     int[] tris;
 
